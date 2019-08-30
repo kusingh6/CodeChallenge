@@ -11,3 +11,5 @@ CREATE TABLE application(
 CREATE USER pharmauser WITH PASSWORD 'pharmapass';
 
 GRANT ALL PRIVILEGES ON DATABASE "postgres" to pharmauser;
+
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO pharmauser;
