@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router } from '@angular/router';
 import { EnrolmentResponse } from '../../models/enrolment-response';
 
 @Component({
@@ -13,10 +12,8 @@ export class EnrolmentStatusComponent implements OnInit {
   enrolmentResponse: EnrolmentResponse;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private location: Location) {
-      this.enrolmentResponse = this.router.getCurrentNavigation().extras.state.example as EnrolmentResponse;
+    private router: Router) {
+      this.enrolmentResponse = this.router.getCurrentNavigation().extras.state as EnrolmentResponse;
     }
 
   ngOnInit() { }
