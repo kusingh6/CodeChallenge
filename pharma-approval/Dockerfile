@@ -1,6 +1,6 @@
 FROM maven:3.5.2-jdk-8-alpine as builder
-COPY pom.xml /tmp/
-COPY src /tmp/src/
+COPY /pharma-approval/pom.xml /tmp/
+COPY /pharma-approval/src /tmp/src/
 WORKDIR /tmp/
 RUN mvn package
 

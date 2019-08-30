@@ -12,11 +12,11 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo Building the Docker image for Prime_Web...         
+      - echo Building the Docker image for camunda_workflow...         
       - docker build -t prime_camunda -f camunda_workflow/Dockerfile .
       - docker tag prime_camunda:latest 653405621825.dkr.ecr.us-west-2.amazonaws.com/prime_camunda:latest      
   post_build:
     commands:
       - echo Build completed on `date`
-      - echo Pushing the Docker image for Prime_Web Component...
+      - echo Pushing the Docker image for camunda_workflow Component...
       - docker push 653405621825.dkr.ecr.us-west-2.amazonaws.com/prime_camunda:latest
