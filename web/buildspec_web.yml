@@ -1,0 +1,21 @@
+version: 0.1
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image for Prime_Web...          
+      - docker build -t prime_frontend .
+      - docker tag prime_frontend:latest 653405621825.dkr.ecr.us-west-2.amazonaws.com/prime_frontend:latest      
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image for Prime_Web Component...
+      - docker push 653405621825.dkr.ecr.us-west-2.amazonaws.com/prime_frontend:latest
