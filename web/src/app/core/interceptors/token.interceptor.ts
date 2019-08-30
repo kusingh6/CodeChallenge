@@ -20,7 +20,7 @@ export class TokenInterceptor implements HttpInterceptor {
     const keycloakToken = this.keycloakService.getKeycloakInstance().token;
     const authRequest = request.clone({
       headers: new HttpHeaders({
-        Authorization: `Bearer ${{keycloakToken}}`
+        Authorization: `Bearer ${keycloakToken}`
       })
     });
 
