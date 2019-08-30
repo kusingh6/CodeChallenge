@@ -44,7 +44,10 @@ export class EnrolmentDetailComponent implements OnInit {
 
   onEnrolmentSubmit() {
     if (this.enrolmentForm.valid) {
-      this.enrolmentService.addEnrolment(this.enrolmentModel).subscribe(response => {
+      this.enrolmentService.addEnrolment({
+        pharmacistRegNo: this.enrolmentForm.get('pharmacistRegNo').value,
+        applicantName: this.enrolmentForm.get('fullName').value,
+      } as Enrolment).subscribe(response => {
         this.router.navigate(['../status'], { relativeTo: this.route, state: response });
       });
     }
