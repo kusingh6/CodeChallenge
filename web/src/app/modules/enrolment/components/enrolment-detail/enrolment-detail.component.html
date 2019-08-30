@@ -1,0 +1,23 @@
+<div class="col-sm-12 pt-5">
+    <div class="center_enrolment_details">
+        <form [formGroup]="enrolmentForm" (ngSubmit)="onEnrolmentSubmit()">
+        <h2 id="type-blockquotes">Enrolment Request</h2>
+          <div class="form-group">
+            <label for="pharmacistRegNo" class="control-label">Pharmacist Registration Number</label>
+            <input type="text" class="form-control" formControlName="pharmacistRegNo" name="pharmacistRegNo" placeholder="Pharmacist Registration Number">
+            <div class="invalid-feedback" *ngIf="enrolmentForm.get('pharmacistRegNo').dirty && enrolmentForm.get('pharmacistRegNo').errors && enrolmentForm.get('pharmacistRegNo').errors.emptyOrNumber">
+              Pharmacist Registration Number should be empty or a {{pharmacistRegNoLength}} digit number
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fullName" class="control-label">Full Name</label>
+            <input type="text" class="form-control" formControlName="fullName" name="fullName" placeholder="Full Name">
+          </div>
+          <div class="form-group">
+            <div class="text-right">
+              <button type="submit" class="btn btn-primary mr-0" [disabled]="!enrolmentForm.valid">Submit</button>
+            </div>
+          </div>
+        </form>
+    </div>
+</div>
