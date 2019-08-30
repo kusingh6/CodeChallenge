@@ -17,10 +17,12 @@ VOLUME /tmp
 EXPOSE 8080
 
 # The application's jar file
-ARG JAR_FILE=target/pharma-approval.jar
+#ARG JAR_FILE=target/pharma-approval.jar
 
 # Add the application's jar to the container
-ADD ${JAR_FILE} pharma-approval.jar
+#ADD ${JAR_FILE} pharma-approval.jar
+
+COPY --from=builder /tmp/target/*.jar pharma-approval.jar
 
 # Run the jar file 
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/pharma-approval.jar"]
