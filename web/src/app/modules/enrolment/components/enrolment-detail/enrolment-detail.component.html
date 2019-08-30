@@ -1,7 +1,9 @@
 <div class="col-sm-12 pt-5">
-    <div class="center_enrolment_details">
-        <form [formGroup]="enrolmentForm" (ngSubmit)="onEnrolmentSubmit()">
-        <h2 id="type-blockquotes">Enrolment Request</h2>
+    <div class="center_enrolment_details card">
+        <h2 class="card-header">Enrolment Request</h2>
+        <form [formGroup]="enrolmentForm" (ngSubmit)="onEnrolmentSubmit()" class="card-body">
+          <div class="form-group">
+          </div>
           <div class="form-group">
             <label for="pharmacistRegNo" class="control-label">Pharmacist Registration Number</label>
             <input type="text" class="form-control" formControlName="pharmacistRegNo" name="pharmacistRegNo" placeholder="Pharmacist Registration Number">
