@@ -7,15 +7,17 @@
           <tr>
             <th>Pharmacist Regestration Number</th>
             <th>Full Name</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let enrolment of enrolmentList">
             <td>{{enrolment.pharmacistRegNo}}</td>
             <td>{{enrolment.applicantName}}</td>
+            <td>{{enrolment.applicationStatus}}</td>
           </tr>
           <tr *ngIf="!enrolmentList || enrolmentList.length == 0 ">
-            <td colspan="2" class="no-enrolments">No enrolments found</td>
+            <td colspan="3" class="no-enrolments">No enrolments found</td>
           </tr>
         </tbody>
       </table>

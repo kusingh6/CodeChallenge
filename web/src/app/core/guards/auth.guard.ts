@@ -13,7 +13,7 @@ export class AuthGuard extends KeycloakAuthGuard implements CanActivate {
   isAccessAllowed(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (!this.authenticated) {
-        this.keycloakService.login({ idpHint: 'google' })
+        this.keycloakService.login()
           .catch(e => console.error(e));
         return reject(false);
       }

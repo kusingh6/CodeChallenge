@@ -1,16 +1,24 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EnrolmentDetailComponent } from './enrolment-detail.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { KeycloakService } from 'keycloak-angular';
+import { EnrolmentService } from '../../services/enrolment.service';
 
 describe('EnrolmentDetailComponent', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [
-          RouterTestingModule
+          RouterTestingModule,
+          ReactiveFormsModule
         ],
         declarations: [
           EnrolmentDetailComponent
         ],
+        providers: [
+          KeycloakService,
+          EnrolmentService
+        ]
       }).compileComponents();
     }));
 
