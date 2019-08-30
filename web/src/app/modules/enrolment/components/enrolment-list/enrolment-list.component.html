@@ -1,0 +1,24 @@
+<div class="col-sm-12 pt-5">
+  <div class="card center_enrolment_list">
+    <h2 class="card-header">Your Enrolments</h2>
+    <div class="card-body">
+      <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>Pharmacist Regestration Number</th>
+            <th>Full Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let enrolment of enrolmentList">
+            <td>{{enrolment.pharmacistRegNo}}</td>
+            <td>{{enrolment.applicantName}}</td>
+          </tr>
+          <tr *ngIf="!enrolmentList || enrolmentList.length == 0 ">
+            <td colspan="2" class="no-enrolments">No enrolments found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -14,4 +14,8 @@ export class EnrolmentService {
     return this.http.post<EnrolmentResponse>(`${environment.apiUrl}/application`, enrolment);
   }
 
+  getEnrolmentList(): Observable<Enrolment[]> {
+    return this.http.get<Enrolment[]>(`${environment.apiUrl}/application`);
+  }
+
 }

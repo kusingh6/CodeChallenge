@@ -7,10 +7,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { EnrolmentRoutingModule } from './enrolment.routing';
 import { EnrolmentService } from './services/enrolment.service';
 import { EnrolmentStatusComponent } from './components/enrolment-status/enrolment-status.component';
+import { EnrolmentListComponent } from './components/enrolment-list/enrolment-list.component';
 
 @NgModule({
     declarations: [
         EnrolmentDetailComponent,
+        EnrolmentListComponent,
         EnrolmentStatusComponent
     ],
     imports: [
