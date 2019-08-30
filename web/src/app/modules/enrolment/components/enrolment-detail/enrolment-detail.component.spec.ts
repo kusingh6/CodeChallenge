@@ -60,6 +60,6 @@ describe('EnrolmentDetailComponent', () => {
     component.enrolmentForm.controls['pharmacistRegNo'].setValue('1234');
     // tslint:disable-next-line: no-string-literal
     component.enrolmentForm.controls['fullName'].setValue('vysakh');
-});
+  });
 
 });
