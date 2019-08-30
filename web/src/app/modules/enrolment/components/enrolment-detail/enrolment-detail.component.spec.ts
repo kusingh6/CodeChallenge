@@ -4,12 +4,14 @@ import { EnrolmentDetailComponent } from './enrolment-detail.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { KeycloakService } from 'keycloak-angular';
 import { EnrolmentService } from '../../services/enrolment.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('EnrolmentDetailComponent', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [
           RouterTestingModule,
+          HttpClientTestingModule,
           ReactiveFormsModule
         ],
         declarations: [
