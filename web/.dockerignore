@@ -1,0 +1,15 @@
+# Git
+.git
+.gitignore
+
+# Build step outputs
+dist
+
+# Docker configuration
+Dockerfile
+
+# NPM dependencies
+node_modules
+
+# Other
+.editorconfig

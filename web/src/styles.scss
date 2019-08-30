@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "../node_modules/@bcgov/bootstrap-theme/dist/scss/common";
+
+// Now bring in the rest of bootstrap!
+@import "~bootstrap/scss/bootstrap";
+
+// Overrides of bootstrap classes
+@import "../node_modules/@bcgov/bootstrap-theme/dist/scss/overrides";
+
+// Import the additions to bootstrap base
+@import "../node_modules/@bcgov/bootstrap-theme/dist/scss/additions";
+
+
+.ng-touched.ng-invalid:not(form)  {
+  @extend .is-invalid;
+}

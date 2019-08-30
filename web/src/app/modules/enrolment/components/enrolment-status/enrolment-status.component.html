@@ -1,0 +1,18 @@
+<div *ngIf="enrolmentResponse">
+  <div class="card card-success" *ngIf="enrolmentResponse.status">
+    <div class="card-header">
+      <h5 class="my-0">Success</h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Your request has been submitted for evaluation. To track the status use reference id <strong>{{enrolmentResponse.referenceId}}</strong>.</p>
+    </div>
+  </div>
+  <div class="card card-danger" *ngIf="!enrolmentResponse.status">
+    <div class="card-header">
+      <h5 class="my-0">Error</h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{enrolmentResponse.message}}.</p>
+    </div>
+  </div>
+</div>
