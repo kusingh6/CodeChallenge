@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
-import {KeycloakAuthGuard, KeycloakService} from 'keycloak-angular';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard extends KeycloakAuthGuard implements CanActivate {
-  constructor(protected router: Router, protected keycloakAngular: KeycloakService) {
-    super(router, keycloakAngular);
+  constructor(protected router: Router, protected keycloakService: KeycloakService) {
+    super(router, keycloakService);
   }
 
   isAccessAllowed(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (!this.authenticated) {
-        this.keycloakAngular.login()
+        this.keycloakService.login({ idpHint: 'google' })
           .catch(e => console.error(e));
         return reject(false);
       }
