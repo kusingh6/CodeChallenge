@@ -10,5 +10,5 @@ const keycloakConfig: KeycloakConfig = {
 export const environment = {
   production: true,
   keycloak: keycloakConfig,
-  apiUrl: 'http://backend:80'
+  apiUrl: 'http://52.25.173.136:8080/'
 };
