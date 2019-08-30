@@ -1,8 +1,14 @@
+FROM maven:3.5.2-jdk-8-alpine as builder
+COPY pom.xml /tmp/
+COPY src /tmp/src/
+WORKDIR /tmp/
+RUN mvn package
+
 # Start with a base image containing Java runtime
-FROM openjdk:8-jdk-alpine
+FROM openjdk:8-jdk-alpine as runtime
 
 # Add Maintainer Info
-LABEL maintainer="callicoder@gmail.com"
+LABEL maintainer="dheepakrd@gmail.com"
 
 # Add a volume pointing to /tmp
 VOLUME /tmp
