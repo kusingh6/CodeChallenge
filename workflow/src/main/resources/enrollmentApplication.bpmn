@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1vgfiro" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.1">
+  <bpmn:collaboration id="Collaboration_1ntryp8">
+    <bpmn:participant id="pharmaEnrollmentApplicationWorkflow" name="FarmerEnrollment Application" processRef="pharmaEnrollmentApplicationWorkflow-javaee" />
+  </bpmn:collaboration>
+  <bpmn:process id="pharmaEnrollmentApplicationWorkflow-javaee" name="PharmaEnrollmentApplicationWorkflow" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0oimm4q">
+      <bpmn:lane id="Lane_0invw8z">
+        <bpmn:flowNodeRef>Task_SubmitDecision</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_176dleb</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_0obwwdp</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_01vkghe">
+        <bpmn:flowNodeRef>StartEvent_ApplicationReceived</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_ApprovalCriteriaCheck</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0vlw9lp</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_0qve3mf</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_ApplicationReceived" name="Enrollment Application received">
+      <bpmn:outgoing>SequenceFlow_1ej3bop</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_ApprovalCriteriaCheck" name="Registration Number Exists?">
+      <bpmn:incoming>SequenceFlow_1ej3bop</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_NeedReview</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_AutoApproveApplication</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_AutoApproveApplication" name="Auto Approve" sourceRef="ExclusiveGateway_ApprovalCriteriaCheck" targetRef="Task_0vlw9lp">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${registrationNumber != "null"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_NeedReview" name="No" sourceRef="ExclusiveGateway_ApprovalCriteriaCheck" targetRef="Task_SubmitDecision">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${registrationNumber == "null"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1ej3bop" sourceRef="StartEvent_ApplicationReceived" targetRef="ExclusiveGateway_ApprovalCriteriaCheck" />
+    <bpmn:sequenceFlow id="SequenceFlow_0cmcvne" sourceRef="Task_SubmitDecision" targetRef="Task_176dleb" />
+    <bpmn:sequenceFlow id="SequenceFlow_0h0sg8k" sourceRef="Task_0vlw9lp" targetRef="EndEvent_0qve3mf" />
+    <bpmn:serviceTask id="Task_0vlw9lp" name="Process Enrollment Application" camunda:class="com.aot.pharma.workflow.processEnrollmentApplication">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="status">approved</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_AutoApproveApplication</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0h0sg8k</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_SubmitDecision" name="Approve or Reject Pharmacist enrolment application." camunda:formKey="embedded:app:forms/approve-enrollment.html" camunda:candidateUsers="admin">
+      <bpmn:incoming>SequenceFlow_NeedReview</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0cmcvne</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1oj4i8a" sourceRef="Task_176dleb" targetRef="EndEvent_0obwwdp" />
+    <bpmn:serviceTask id="Task_176dleb" name="Process Enrollment Application" camunda:class="com.aot.pharma.workflow.processEnrollmentApplication">
+      <bpmn:incoming>SequenceFlow_0cmcvne</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1oj4i8a</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent_0obwwdp">
+      <bpmn:incoming>SequenceFlow_1oj4i8a</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="EndEvent_0qve3mf">
+      <bpmn:incoming>SequenceFlow_0h0sg8k</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1ntryp8">
+      <bpmndi:BPMNShape id="Participant_1jt6l0e_di" bpmnElement="pharmaEnrollmentApplicationWorkflow" isHorizontal="true">
+        <dc:Bounds x="128" y="85" width="873" height="520" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_ApplicationReceived">
+        <dc:Bounds x="225" y="437" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="216" y="480" width="54" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_01vkghe_di" bpmnElement="Lane_01vkghe" isHorizontal="true">
+        <dc:Bounds x="158" y="275" width="843" height="330" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0invw8z_di" bpmnElement="Lane_0invw8z" isHorizontal="true">
+        <dc:Bounds x="158" y="85" width="843" height="190" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1ej3bop_di" bpmnElement="SequenceFlow_1ej3bop">
+        <di:waypoint x="261" y="455" />
+        <di:waypoint x="378" y="455" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_00awevi_di" bpmnElement="ExclusiveGateway_ApprovalCriteriaCheck" isMarkerVisible="true">
+        <dc:Bounds x="378" y="430" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="364" y="490" width="78" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1cj333t_di" bpmnElement="SequenceFlow_NeedReview">
+        <di:waypoint x="403" y="430" />
+        <di:waypoint x="403" y="174" />
+        <di:waypoint x="473" y="174" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="411" y="299" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1cjxcp4_di" bpmnElement="SequenceFlow_AutoApproveApplication">
+        <di:waypoint x="428" y="455" />
+        <di:waypoint x="510" y="455" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="437" y="437" width="66" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0obwwdp_di" bpmnElement="EndEvent_0obwwdp">
+        <dc:Bounds x="872" y="156" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0qve3mf_di" bpmnElement="EndEvent_0qve3mf">
+        <dc:Bounds x="692" y="457" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0cmcvne_di" bpmnElement="SequenceFlow_0cmcvne">
+        <di:waypoint x="573" y="174" />
+        <di:waypoint x="680" y="174" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0c8o5x1_di" bpmnElement="Task_0vlw9lp">
+        <dc:Bounds x="510" y="435" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0h0sg8k_di" bpmnElement="SequenceFlow_0h0sg8k">
+        <di:waypoint x="610" y="475" />
+        <di:waypoint x="692" y="475" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_17qo2bv_di" bpmnElement="Task_SubmitDecision">
+        <dc:Bounds x="473" y="134" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1oj4i8a_di" bpmnElement="SequenceFlow_1oj4i8a">
+        <di:waypoint x="780" y="174" />
+        <di:waypoint x="872" y="174" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_11eefvs_di" bpmnElement="Task_176dleb">
+        <dc:Bounds x="680" y="134" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
