@@ -34,7 +34,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_1ej3bop" sourceRef="StartEvent_ApplicationReceived" targetRef="ExclusiveGateway_ApprovalCriteriaCheck" />
     <bpmn:sequenceFlow id="SequenceFlow_0cmcvne" sourceRef="Task_SubmitDecision" targetRef="Task_176dleb" />
     <bpmn:sequenceFlow id="SequenceFlow_0h0sg8k" sourceRef="Task_0vlw9lp" targetRef="EndEvent_0qve3mf" />
-    <bpmn:serviceTask id="Task_0vlw9lp" name="Process Enrollment Application" camunda:class="com.aot.pharma.workflow.processEnrollmentApplication">
+    <bpmn:serviceTask id="Task_0vlw9lp" name="Process Enrollment Application" camunda:class="com.aot.pharma.workflow.ProcessEnrollmentApplication">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="status">approved</camunda:inputParameter>
@@ -43,12 +43,12 @@
       <bpmn:incoming>SequenceFlow_AutoApproveApplication</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0h0sg8k</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="Task_SubmitDecision" name="Approve or Reject Pharmacist enrolment application." camunda:formKey="embedded:app:forms/approve-enrollment.html" camunda:candidateUsers="admin">
+    <bpmn:userTask id="Task_SubmitDecision" name="Approve or Reject Pharmacist enrollment application." camunda:formKey="embedded:app:forms/approve-enrollment.html" camunda:candidateUsers="admin">
       <bpmn:incoming>SequenceFlow_NeedReview</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0cmcvne</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="SequenceFlow_1oj4i8a" sourceRef="Task_176dleb" targetRef="EndEvent_0obwwdp" />
-    <bpmn:serviceTask id="Task_176dleb" name="Process Enrollment Application" camunda:class="com.aot.pharma.workflow.processEnrollmentApplication">
+    <bpmn:serviceTask id="Task_176dleb" name="Process Enrollment Application" camunda:class="com.aot.pharma.workflow.ProcessEnrollmentApplication">
       <bpmn:incoming>SequenceFlow_0cmcvne</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1oj4i8a</bpmn:outgoing>
     </bpmn:serviceTask>
