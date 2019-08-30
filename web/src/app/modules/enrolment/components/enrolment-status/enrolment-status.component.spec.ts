@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EnrolmentStatusComponent } from './enrolment-status.component';
 import { EnrolmentResponse } from '../../models/enrolment-response';
@@ -17,22 +17,34 @@ class RouterStub {
   }
 }
 
-describe('EnrolmentDetailComponent', () => {
-    beforeEach(async(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule
-        ],
-        declarations: [
-          EnrolmentStatusComponent
-        ],
-        providers: [{ provide: Router, useClass: RouterStub }]
-      }).compileComponents();
-    }));
+describe('EnrolmentStatusComponent', () => {
+  let component: EnrolmentStatusComponent;
+  let fixture: ComponentFixture<EnrolmentStatusComponent>;
 
-    it('should create the enrolment-status', () => {
-      const fixture = TestBed.createComponent(EnrolmentStatusComponent);
-      const enrolmentStatus = fixture.debugElement.componentInstance;
-      expect(enrolmentStatus).toBeTruthy();
-    });
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
+      declarations: [
+        EnrolmentStatusComponent
+      ],
+      providers: [{ provide: Router, useClass: RouterStub }]
+    }).compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(EnrolmentStatusComponent);
+    component = fixture.componentInstance;
+    component.ngOnInit();
+    fixture.detectChanges();
+  });
+
+  it('should create the enrolment-status', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('enrolmentResponse has valid referenceId', () => {
+    expect(component.enrolmentResponse.referenceId).toBe('1234');
+  });
 });
