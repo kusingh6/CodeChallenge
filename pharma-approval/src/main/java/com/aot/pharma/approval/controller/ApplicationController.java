@@ -5,6 +5,7 @@ package com.aot.pharma.approval.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -42,6 +43,7 @@ public class ApplicationController {
 	 * 
 	 * @return ResponseEntity
 	 */
+	@CrossOrigin(origins="*")
 	@RequestMapping(value="application", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ApplicationVO>> getApplication(@RequestHeader(name="Authorization",required=true) String bearerToken){
 		List<ApplicationVO> applications = applicationService.getAllApplications();
@@ -55,6 +57,7 @@ public class ApplicationController {
 	 * @param applicationId
 	 * @return
 	 */
+	@CrossOrigin(origins="*")
 	@RequestMapping(value="application/{applicationId}", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ApplicationVO> getApplication(@PathVariable("applicationId") String applicationId,@RequestHeader(name="Authorization",required=true) String bearerToken){
 		KeyClockAdapter.authenticateToken(bearerToken,keyclockURL);
@@ -67,6 +70,7 @@ public class ApplicationController {
 	 * @param application
 	 * @return ResponseEntity
 	 */
+	@CrossOrigin(origins="*")
 	@RequestMapping(value="application", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PharmaSuccessVO> createApplication(@RequestBody ApplicationVO application,@RequestHeader(name="Authorization",required=true) String bearerToken){
 		BearerTokenVO userToken =  KeyClockAdapter.authenticateToken(bearerToken,keyclockURL);
@@ -79,13 +83,14 @@ public class ApplicationController {
 	 * @param application
 	 * @return
 	 */
+	@CrossOrigin(origins="*")
 	@RequestMapping(value="application/{applicationId}/applicationStatus/{applicationStatus}", method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PharmaSuccessVO> updateApplication(@PathVariable("applicationId") String applicationId,@PathVariable("applicationStatus") String applicationStatus,@RequestHeader(name="Authorization",required=true) String bearerToken){
 		KeyClockAdapter.authenticateToken(bearerToken,keyclockURL);
 		PharmaSuccessVO response = applicationService.updateApplication(applicationId,applicationStatus);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
-	
+	@CrossOrigin(origins="*")
 	@RequestMapping(value="user", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserVO> getUser() {
 		UserVO user  = new UserVO();
