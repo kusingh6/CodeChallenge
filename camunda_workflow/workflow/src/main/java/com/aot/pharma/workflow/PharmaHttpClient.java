@@ -61,12 +61,7 @@ public class PharmaHttpClient {
 			conn.setRequestProperty ("Authorization", "Bearer "+token);
 			
 			os = conn.getOutputStream();
-			os.flush();
-
-			if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-				throw new RuntimeException("Failed : HTTP error code : "
-					+ conn.getResponseCode());
-			}
+			os.flush();			
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					(conn.getInputStream())));
