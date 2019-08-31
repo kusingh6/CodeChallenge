@@ -61,12 +61,7 @@ public class PharmaHttpClient {
 			conn.setRequestProperty ("Authorization", "Bearer "+token);
 			
 			os = conn.getOutputStream();
-			os.flush();
-
-			if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-				throw new RuntimeException("Failed : HTTP error code : "
-					+ conn.getResponseCode());
-			}
+			os.flush();			
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					(conn.getInputStream())));
@@ -89,7 +84,7 @@ public class PharmaHttpClient {
 		String userName = properties.getProperty(PHARMA_TOKEN_USER);
 		String password = properties.getProperty(PHARMA_TOKEN_PASSWORD);
 		byte[] encodedBytes = Base64.getEncoder().encode((userName+":"+password).getBytes());
-		String basicTokenHeader = "Bearer "+ new String(encodedBytes);
+		String basicTokenHeader = "Basic "+ new String(encodedBytes);
 		HttpURLConnection tokenConn = (HttpURLConnection) authTokenUrl.openConnection();
 		tokenConn.setRequestProperty ("Authorization", basicTokenHeader);
 		tokenConn.setRequestMethod(POST);
