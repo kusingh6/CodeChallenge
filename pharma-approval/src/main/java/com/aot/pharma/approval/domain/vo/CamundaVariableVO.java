@@ -57,4 +57,15 @@ public class CamundaVariableVO {
 		this.applicantName = applicantName;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "CamundaVariableVO [applicationId=" + applicationId + ", registrationNumber=" + registrationNumber
+				+ ", applicantName=" + applicantName + "]";
+	}
+	
+	
+
 }

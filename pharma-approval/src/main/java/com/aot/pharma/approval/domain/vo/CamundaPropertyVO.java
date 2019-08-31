@@ -52,6 +52,14 @@ public class CamundaPropertyVO {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "CamundaPropertyVO [value=" + value + ", type=" + type + "]";
+	}
 	
 	
 
