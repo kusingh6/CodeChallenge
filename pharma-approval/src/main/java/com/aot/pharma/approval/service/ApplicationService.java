@@ -4,6 +4,7 @@
 package com.aot.pharma.approval.service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import com.aot.pharma.approval.application.vo.PharmaSuccessVO;
 import com.aot.pharma.approval.domain.vo.ApplicationVO;
@@ -55,4 +56,11 @@ public interface ApplicationService {
 	 * @return
 	 */
 	List<ApplicationVO> getApplicationByUserId(String userId);
+	
+	/**
+	 * 
+	 * @param application
+	 * @param bpmURL
+	 */
+	public CompletableFuture<String> invokeBPM(ApplicationVO application,String bpmURL);
 }
