@@ -85,7 +85,7 @@ public class ApplicationController {
 		PharmaSuccessVO response = applicationService.createApplication(application, userToken);
 		application.setApplicationId(response.getReferenceId());
 		applicationService.invokeBPM(application, bpmURL);
-		return new ResponseEntity<>(new PharmaSuccessVO(), HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	/**
