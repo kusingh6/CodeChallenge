@@ -4,7 +4,7 @@ WORKDIR /web
 COPY /web/. /web/
 RUN npm install
 #COPY /web/. /web/
-RUN npm run build
+RUN npm run build --prod
 
 # production stage
 FROM nginx:stable-alpine as production-stage
