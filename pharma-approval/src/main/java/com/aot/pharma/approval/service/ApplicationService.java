@@ -19,7 +19,7 @@ public interface ApplicationService {
 	 * Get all applications
 	 * @return List<ApplicationVO>
 	 */
-	List<ApplicationVO> getAllApplications();
+	List<ApplicationVO> getAllApplications(String userId);
 	
 	/**
 	 * Get all applications based on status

@@ -29,8 +29,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 	 * @see com.aot.pharma.approval.service.ApplicationService#getAllApplications()
 	 */
 	@Override
-	public List<ApplicationVO> getAllApplications() {
-		List<Application> applications = applicationRepository.findAll();
+	public List<ApplicationVO> getAllApplications(String userId) {
+		List<Application> applications = applicationRepository.findByUserId(userId);
 		List<ApplicationVO> applicationList = new ArrayList<>();
 		if(applications != null && applications.size()>0) {
 			applications.forEach(application -> {

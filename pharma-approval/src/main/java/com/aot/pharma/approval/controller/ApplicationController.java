@@ -50,8 +50,8 @@ public class ApplicationController {
 	@CrossOrigin(origins="*")
 	@RequestMapping(value="application", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ApplicationVO>> getApplication(@RequestHeader(name="Authorization",required=true) String bearerToken){
-		List<ApplicationVO> applications = applicationService.getAllApplications();
-		KeyClockAdapter.authenticateToken(bearerToken,keyclockURL);
+		BearerTokenVO token= KeyClockAdapter.authenticateToken(bearerToken,keyclockURL);
+		List<ApplicationVO> applications = applicationService.getAllApplications(token.getEmail());
 		ResponseEntity<List<ApplicationVO>> response = new ResponseEntity<>(applications,HttpStatus.OK);
 		return response;
 	}
