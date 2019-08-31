@@ -1,6 +1,6 @@
 [
     {
-      "name": "prime_backend",
+      "name": "pharma-backend",
       "imageUri": "653405621825.dkr.ecr.us-west-2.amazonaws.com/prime_backend:latest"
     }
   ]
