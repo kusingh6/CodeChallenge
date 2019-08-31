@@ -89,7 +89,7 @@ public class PharmaHttpClient {
 		String userName = properties.getProperty(PHARMA_TOKEN_USER);
 		String password = properties.getProperty(PHARMA_TOKEN_PASSWORD);
 		byte[] encodedBytes = Base64.getEncoder().encode((userName+":"+password).getBytes());
-		String basicTokenHeader = "Basic "+ new String(encodedBytes);
+		String basicTokenHeader = "Bearer "+ new String(encodedBytes);
 		HttpURLConnection tokenConn = (HttpURLConnection) authTokenUrl.openConnection();
 		tokenConn.setRequestProperty ("Authorization", basicTokenHeader);
 		tokenConn.setRequestMethod(POST);
