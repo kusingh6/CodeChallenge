@@ -1,6 +1,6 @@
 [
     {
-      "name": "prime_camunda",
+      "name": "prime-camunda",
       "imageUri": "653405621825.dkr.ecr.us-west-2.amazonaws.com/prime_camunda:latest"
     }
   ]
