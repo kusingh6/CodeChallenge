@@ -131,7 +131,7 @@ public class Application {
 	 * @return the applicationStatus
 	 */
 	public String getApplicationStatus() {
-		return applicationStatus;
+		return (applicationStatus==null) ? "IN PROGRESS" : applicationStatus ;
 	}
 
 	/**

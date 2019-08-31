@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aot.pharma.approval.adapter.CamundaBPMAdapter;
 import com.aot.pharma.approval.adapter.KeyClockAdapter;
 import com.aot.pharma.approval.application.vo.PharmaSuccessVO;
 import com.aot.pharma.approval.domain.vo.ApplicationVO;
@@ -35,6 +36,9 @@ public class ApplicationController {
 	
 	@Value( "${keycloak.url}" )
 	private String keyclockURL;
+	
+	@Value( "${bpm.url}" )
+	private String bpmURL;
 	
 	@Autowired
 	private ApplicationService applicationService;
@@ -75,6 +79,7 @@ public class ApplicationController {
 	public ResponseEntity<PharmaSuccessVO> createApplication(@RequestBody ApplicationVO application,@RequestHeader(name="Authorization",required=true) String bearerToken){
 		BearerTokenVO userToken =  KeyClockAdapter.authenticateToken(bearerToken,keyclockURL);
 		PharmaSuccessVO response = applicationService.createApplication(application,userToken);
+		CamundaBPMAdapter.invokeBPM(application, bpmURL);;
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
