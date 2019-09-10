@@ -1,0 +1,85 @@
+Parameters:
+  EnvironmentName:
+    Type: String
+    Description: Environment name - dev or prod
+    Default: dev
+    AllowedValues:
+      - dev
+      - prod
+    ConstraintDescription: Specify either dev or prod
+Resources:
+  ECSRole:
+      Type: AWS::IAM::Role
+      Properties: 
+          Path: /
+          RoleName: !Sub ${EnvironmentName}-ECSRole-${AWS::Region}
+          AssumeRolePolicyDocument: |
+              {
+                  "Statement": [{
+                      "Action": "sts:AssumeRole",
+                      "Effect": "Allow",
+                      "Principal": { 
+                          "Service": "ec2.amazonaws.com" 
+                      }
+                  }]
+              }
+          ManagedPolicyArns:
+              - "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+          Policies: 
+              - PolicyName: ecs-service
+                PolicyDocument: |
+                  {
+                      "Statement": [{
+                          "Effect": "Allow",
+                          "Action": [
+                              "ecs:CreateCluster",
+                              "ecs:DeregisterContainerInstance",
+                              "ecs:DiscoverPollEndpoint",
+                              "ecs:Poll",
+                              "ecs:RegisterContainerInstance",
+                              "ecs:StartTelemetrySession",
+                              "ecs:Submit*",
+                              "logs:CreateLogStream",
+                              "logs:PutLogEvents",
+                              "ecr:BatchCheckLayerAvailability",
+                              "ecr:BatchGetImage",
+                              "ecr:GetDownloadUrlForLayer",
+                              "ecr:GetAuthorizationToken"
+                          ],
+                          "Resource": "*"
+                      }]
+                  }
+              - PolicyName: ec2-s3-write-access
+                PolicyDocument:
+                   Statement:
+                     - Effect: Allow
+                       Action:
+                         - s3:PutObject
+                         - s3:GetBucketAcl
+                         - s3:PutObjectTagging
+                         - s3:ListBucket
+                         - s3:PutObjectAcl
+                       Resource: !Sub arn:aws:s3:::${S3BucketName}/*
+              - PolicyName: ec2-cloudwatch-write-access
+                PolicyDocument:
+                  Statement:
+                    - Effect: Allow
+                      Action:
+                        - logs:CreateLogStream
+                        - logs:PutLogEvents
+                        - logs:CreateLogGroup
+                      Resource: "*"
+
+  ECSInstanceProfile: 
+      Type: AWS::IAM::InstanceProfile
+      Properties:
+          Path: /
+          Roles: 
+              - !Ref ECSRole
+
+Outputs:
+  ECSRole:
+    Description: ECS Role to attached to instances to pull from ECR repositories
+    Value: !GetAtt ECSRole.Arn
+    Export:
+      Name: ECSRole

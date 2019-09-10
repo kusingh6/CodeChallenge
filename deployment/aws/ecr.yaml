@@ -1,0 +1,88 @@
+Parameters:
+  MaxTaggedContainerImagesToRetain:
+    Type: Number
+    Description: The number of tagged container images to retain before expiring
+    MinValue: 1
+    MaxValue: 100
+    ConstraintDescription: Value must be between 1 and 100
+    Default: 20
+
+  DaysToRetainUntaggedContainerImages:
+    Type: Number
+    Description: The number days to retain untagged container images before expiring
+    MinValue: 1
+    MaxValue: 100
+    ConstraintDescription: Value must be between 1 and 100
+    Default: 7
+
+  EnvironmentName:
+    Type: String
+    Description: Environment name - dev or prod
+    Default: dev
+    AllowedValues:
+      - dev
+      - prod
+    ConstraintDescription: Specify either dev or prod
+
+  repositoryName:
+    Type: String
+
+Resources:
+  
+
+  EcrDockerRepository:
+      Type: AWS::ECR::Repository
+      Properties:
+        RepositoryName: !Ref repositoryName
+        RepositoryPolicyText:
+              Version: "2012-10-17"
+              Statement:
+                  -
+                    Sid: AllowPushPull
+                    Effect: Allow
+                    Principal:
+                      AWS:
+                        - !ImportValue ECSRole
+                    Action:
+                      - "ecr:GetDownloadUrlForLayer"
+                      - "ecr:BatchGetImage"
+                      - "ecr:BatchCheckLayerAvailability"
+                      - "ecr:PutImage"
+                      - "ecr:InitiateLayerUpload"
+                      - "ecr:UploadLayerPart"
+                      - "ecr:CompleteLayerUpload"
+        LifecyclePolicy:
+          LifecyclePolicyText: !Sub
+            - |
+              {
+                "rules": [
+                  {
+                    "rulePriority": 1,
+                    "description": "Only keep untagged images for ${DaysToRetainUntaggedContainerImages} days",
+                    "selection": {
+                      "tagStatus": "untagged",
+                      "countType": "sinceImagePushed",
+                      "countUnit": "days",
+                      "countNumber": ${DaysToRetainUntaggedContainerImages}
+                    },
+                    "action": { "type": "expire" }
+                  },
+                  {
+                    "rulePriority": 2,
+                    "description": "Keep only ${MaxTaggedContainerImagesToRetain} tagged images, expire all others",
+                    "selection": {
+                      "tagStatus": "tagged",
+                      "tagPrefixList": [ "${EnvironmentName}" ],
+                      "countType": "imageCountMoreThan",
+                      "countNumber": ${MaxTaggedContainerImagesToRetain}
+                    },
+                    "action": { "type": "expire" }
+                  }
+                ]
+              }
+            - DaysToRetainUntaggedContainerImages: !Ref DaysToRetainUntaggedContainerImages
+              MaxTaggedContainerImagesToRetain: !Ref MaxTaggedContainerImagesToRetain
+              EnvironmentName: !Ref EnvironmentName
+Outputs:    
+  Arn:
+    Value: !GetAtt EcrDockerRepository.Arn

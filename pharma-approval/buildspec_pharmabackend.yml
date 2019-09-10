@@ -9,14 +9,18 @@ phases:
       - echo install docker daemon
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email --region us-west-2)
+      - IMAGE_URI="${REPOSITORY_URI}:latest"
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image for Pharma-approval backend...         
-      - docker build -t prime_backend -f pharma-approval/Dockerfile .
-      - docker tag prime_backend:latest 653405621825.dkr.ecr.us-west-2.amazonaws.com/prime_backend:latest      
+      - docker build -t ${REPOSITORY} -f pharma-approval/Dockerfile .
+      - docker tag "${REPOSITORY}:latest" "$IMAGE_URI"      
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image for Pharma-approval backend...
-      - docker push 653405621825.dkr.ecr.us-west-2.amazonaws.com/prime_backend:latest
+      - docker push "$IMAGE_URI"
+      - printf '[{"name":"pharma-backend","imageUri":"%s"}]' "$IMAGE_URI" > pharma-approval/pharma_images.json
+  artifacts:
+    files: pharma-approval/pharma_images.json

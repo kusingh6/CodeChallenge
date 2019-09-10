@@ -1,0 +1,7 @@
+[
+    {
+    "ParameterKey": "repositoryName",
+    "ParameterValue": "ecr-${RepositoryName}"
+    }
+  ]
+  

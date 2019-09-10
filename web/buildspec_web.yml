@@ -9,14 +9,18 @@ phases:
       - echo install docker daemon
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - IMAGE_URI="${REPOSITORY_URI}:latest"
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image for Prime_Web...         
-      - docker build -t prime_frontend -f web/Dockerfile .
-      - docker tag prime_frontend:latest 653405621825.dkr.ecr.us-west-2.amazonaws.com/prime_frontend:latest      
+      - docker build -t ${REPOSITORY} -f web/Dockerfile .
+      - docker tag "${REPOSITORY}:latest" "$IMAGE_URI"      
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image for Prime_Web Component...
-      - docker push 653405621825.dkr.ecr.us-west-2.amazonaws.com/prime_frontend:latest
+      - docker push "$IMAGE_URI"
+      - printf '[{"name":"prime-frontend","imageUri":"%s"}]' "$IMAGE_URI" > web/web_images.json
+  artifacts:
+    files: web/web_images.json
