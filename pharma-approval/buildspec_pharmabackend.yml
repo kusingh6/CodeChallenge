@@ -22,5 +22,5 @@ phases:
       - echo Pushing the Docker image for Pharma-approval backend...
       - docker push "$IMAGE_URI"
       - printf '[{"name":"pharma-backend","imageUri":"%s"}]' "$IMAGE_URI" > pharma-approval/pharma_images.json
-  artifacts:
-    files: pharma-approval/pharma_images.json
+artifacts:
+  files: pharma-approval/pharma_images.json

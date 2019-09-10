@@ -22,5 +22,5 @@ phases:
       - echo Pushing the Docker image for Prime_Web Component...
       - docker push "$IMAGE_URI"
       - printf '[{"name":"prime-frontend","imageUri":"%s"}]' "$IMAGE_URI" > web/web_images.json
-  artifacts:
-    files: web/web_images.json
+artifacts:
+  files: web/web_images.json
