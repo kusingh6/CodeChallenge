@@ -57,6 +57,7 @@ Resources:
     Type: AWS::CodeBuild::Project
     DependsOn: CodeBuildRole
     Properties:
+      BadgeEnabled: True
       Artifacts:
         Type: NO_ARTIFACTS
       Environment:
@@ -82,6 +83,7 @@ Resources:
     Type: AWS::CodeBuild::Project
     DependsOn: CodeBuildRole
     Properties:
+      BadgeEnabled: True
       Artifacts:
         Type: NO_ARTIFACTS
       Environment:
@@ -281,7 +283,7 @@ Resources:
               Configuration:
                 ClusterName: !Ref Cluster
                 ServiceName: !Ref ServiceBackend
-                FileName: pharma_images.json
+                FileName: pharma-approval/pharma_images.json
               InputArtifacts:
                 - Name: BuildOutput2
               RunOrder: 1
