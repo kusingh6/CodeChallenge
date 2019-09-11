@@ -1,5 +1,11 @@
 # CodeChallenge
 
+## Build Status
+
+Prime Frontend: ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoieFlGbGplMVYwdk00S0xXTEs4QURTRTJPeWJmaTdDbGZoVUR1NmZZNFp4NjA4SHU5ckdoRjZUU2RiL3B6WnVjL3BEeXZmNUpZblAvQmVxQkRjLzY2NzFVPSIsIml2UGFyYW1ldGVyU3BlYyI6IkJDcTF4RGNRdGR0K0xtejAiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
+Prime Backend: ![Build Status](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiWVRrNkU3TTdLYXY3cUNrUWhjYzg3R2RVWDYyMm4wUFM3UVNqZnFjYnRDWThvL3hTTnZJWis4dG9sc1c3MHdNWS92dTRQUnBsM2htOHFoOC92T3A3Z2RNPSIsIml2UGFyYW1ldGVyU3BlYyI6Ik1oM0ZId2ZieXZrUHF5VEsiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
+
+
 This repo will deploy sample code challenge project to multiple environments to AWS, Azure and openshift through the different CI Platforms as AWS CodePipeline, Azure pipeline (Azure DevOps) and Jenkins pipeline.
 
 We will be using this Github repository as our input source code repository.
